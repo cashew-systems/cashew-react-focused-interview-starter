@@ -20,4 +20,26 @@ router.post("/users", function(req, res, next) {
 
 // Begin coding here
 
+/* GET flashcards listing. */
+router.get("/flashcards", async function(req, res, next) {
+  const dataResults = await db.query('select * from flashcards');
+  console.log("here-3")
+  console.log(dataResults)
+  console.log("here-4")
+
+  res.send(dataResults);
+});
+
+
+/* POST flashcards listing. */
+router.post("/flashcards", async function(req, res, next) {
+  const { term, definition } = req.body;
+  console.log('POST "flashcards" route hit');
+  // create a fc
+  const myquery = `insert into flashcards(term, definition) values ('${term}', '${definition}')`;
+  const dataResults = await db.query(myquery);
+
+  res.sendStatus(200)
+});
+
 module.exports = router;
